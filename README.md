@@ -47,6 +47,12 @@ ResearchReasoner automatically:
 - Citation impact analysis
 - Topic synthesis across domains
 
+### 📝 **Automated Research Paper Generation**
+- Generate comprehensive research papers from your knowledge graph
+- Analyze conversation patterns and research themes
+- Create publication-ready documents with proper citations
+- Export in multiple formats (Markdown, PDF-ready)
+
 ### 🔧 **Smart Relationship Detection**
 - **Citation-based**: Direct paper references
 - **Content-based**: Semantic similarity analysis
@@ -208,6 +214,14 @@ The application will be available at:
    → Suggests follow-up questions
    ```
 
+4. **Generate Research Papers**
+   ```
+   → Click "Generate Research Paper" 
+   → AI analyzes your conversations and database
+   → Creates comprehensive academic papers
+   → Download publication-ready documents
+   ```
+
 ### Advanced Features
 
 #### Multi-Step Investigation Mode
@@ -221,12 +235,13 @@ Question: "How has attention mechanism research evolved from 2017 to 2024?"
   4. Synthesize evolution patterns
 ```
 
-#### Research Analytics
-Access comprehensive analytics:
+#### Research Paper Generation
+Access comprehensive analytics and paper generation:
 - Paper distribution by year
 - Top authors and collaborations
 - Citation impact analysis
 - Research trend identification
+- **AI-powered research paper creation** from your knowledge graph and conversations
 
 ## 🔧 API Documentation
 
@@ -296,6 +311,27 @@ POST /api/batch-paper-content
 }
 ```
 
+#### Research Paper Generation (Powered by Sonar)
+```javascript
+// Analyze conversations for paper generation
+POST /api/analyze-conversations
+{
+  "includeUserQuestions": true,
+  "includeAIResponses": true,
+  "extractResearchThemes": true
+}
+
+// Generate comprehensive research paper
+POST /api/generate-research-paper
+{
+  "chatAnalysis": {...},
+  "availablePapers": [...],
+  "paperType": "comprehensive_survey",
+  "includeOriginalResearch": true,
+  "citationStyle": "IEEE"
+}
+```
+
 ### Response Formats
 
 #### Paper Object
@@ -324,6 +360,22 @@ interface ChatResponse {
   confidence: number;
   suggestedQuestions: string[];
   reasoning?: string;
+}
+
+#### Generated Research Paper
+```typescript
+interface GeneratedPaper {
+  title: string;
+  abstract: string;
+  fullPaper: string;
+  sections: PaperSection[];
+  references: Reference[];
+  wordCount: number;
+  metadata: {
+    analysisDate: string;
+    papersAnalyzed: number;
+    conversationsUsed: number;
+  };
 }
 ```
 
@@ -373,11 +425,18 @@ interface ChatResponse {
    - Content similarity analysis for graph connections
    - Research trend identification across time periods
 
+4. **Research Paper Generation**
+   - User requests paper generation
+   - Sonar analyzes conversation patterns and research themes
+   - Synthesizes findings from knowledge graph
+   - Generates comprehensive academic papers with proper citations
+
 ### Data Flow
 1. **Research Discovery**: User query → Perplexity Sonar → Structured paper data
 2. **Content Processing**: Papers analyzed → Relationships identified → Embeddings generated
 3. **Graph Storage**: Papers + Relationships → Neo4j Desktop database
 4. **Interactive Query**: User questions → Sonar AI → Graph traversal → Comprehensive responses
+5. **Paper Generation**: Conversations + Knowledge Graph → Sonar Analysis → Publication-ready papers
 
 ### Key Components
 
@@ -388,6 +447,7 @@ class SonarRAGService {
   async askQuestion(question: string, context: Paper[]): Promise<RAGResponse>
   async investigateComplexQuery(question: string): Promise<Investigation>
   async compareTopics(topic1: string, topic2: string): Promise<Comparison>
+  async generateResearchPaper(conversations: any[], papers: Paper[]): Promise<GeneratedPaper>
 }
 ```
 
@@ -478,12 +538,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Academic Research Community** for open access to research papers
 - **React and TypeScript Communities** for the robust development frameworks
 
-## 📞 Support
-
-- Create an [Issue](https://github.com/Shubham00-3/Research-Reasoner/issues) for bug reports
-- Join our [Discussions](https://github.com/Shubham00-3/Research-Reasoner/discussions) for questions
-- Follow the project for updates
-
----
-
-**Built with ❤️ for the research community using Perplexity's Sonar API**
